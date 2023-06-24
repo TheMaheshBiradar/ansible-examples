@@ -1,0 +1,24 @@
+---
+- name: Ping localhost machine
+  hosts: localhost
+  gather_facts: true
+
+  tasks:
+    - name: Perform Ping
+      ping:
+
+    - name: Debug Message
+      debug:
+        msg: "Hello world from ansible world"
+
+    - name: Get Username
+      command: whoami
+      register: result
+
+    - name: Print Username 
+      debug:  
+        var: result.stdout
+    
+    - name: Debug Message
+      debug:
+        msg: "Hello world from ansible world {{result.stdout}}"
