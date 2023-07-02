@@ -22,3 +22,7 @@
     - name: Debug Message
       debug:
         msg: "Hello world from ansible world {{result.stdout}}"
+
+    - name: Debug Message using ansible variables
+      debug:
+        msg: "{{ lookup('env', 'HOME', default='nobody') }} is the user home directory."
