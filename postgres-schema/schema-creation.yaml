@@ -1,0 +1,30 @@
+---
+- name: postgres schema creation using ansible
+  hosts: localhost
+  vars:
+    db: mahesh
+    schema: wealthmanagement
+    user: wealthmanagement_cloud
+    password: do_not_share
+
+  tasks:
+  
+    - name: Provision Schema
+      postgresql_query:
+        db: "{{ db }}"
+        login_host: localhost
+        login_user: mahesh
+        query: "CREATE SCHEMA {{ schema }}"
+      become: true
+
+    - name: Set credentials for user
+      postgresql_user:
+        db: "{{ db }}"
+        login_host: localhost
+        login_user: mahesh
+        name: "{{ user }}"
+        password: "{{ password }}"
+        encrypted: true
+        priv: ALL
+        role_attr_flags: NOSUPERUSER,NOCREATEDB
+      become: true
