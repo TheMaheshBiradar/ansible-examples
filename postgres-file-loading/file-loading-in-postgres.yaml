@@ -21,3 +21,10 @@
       command: psql -h localhost -U "{{db}}" -d "{{db}}" -c "\copy "{{table}}" FROM "{{ file }}" DELIMITER ';' CSV HEADER";
       delegate_to: localhost
       when: file_details.stat.exists and file_details.stat.size > 0
+
+    - name: Schedule CRON JOB for every hour
+      cron:
+        name: Loading csv file into PG DB 
+        minute: "0"
+        hour: "*"
+        job: "ansible-playbook /Users/mahesh/Dev/ansible-examples/postgres-file-loading/file-loading-in-postgres.yaml"
